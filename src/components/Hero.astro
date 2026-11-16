@@ -1,0 +1,58 @@
+---
+import { site } from '../data/site';
+---
+
+<section class="container-x grid min-h-[100svh] items-center gap-10 pt-24 pb-12 lg:grid-cols-[1.15fr_1fr]">
+  <div>
+    <p class="label mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-paper-2 px-3 py-1.5 text-muted">
+      <span class="h-2 w-2 rounded-full bg-accent"></span>
+      {site.location}
+    </p>
+    <p class="mb-4 text-2xl text-muted">{site.greeting}</p>
+
+    <h1 class="display relative text-[clamp(3.5rem,10vw,8.5rem)]">
+      <span class="sr-only">{site.roles.join(', ')}</span>
+      <span id="role" aria-hidden="true" class="block min-h-[2em] transition-opacity duration-300">
+        {site.roles[0]}
+      </span>
+    </h1>
+
+    <p class="mt-6 max-w-xl text-lg leading-relaxed sm:text-xl">{site.tagline}</p>
+
+    <div class="mt-9 flex flex-wrap gap-3">
+      <a href="#contact" class="label group inline-flex items-center gap-3 rounded-full bg-ink py-2 pr-2 pl-6 text-paper">
+        Contact me
+        <span class="grid h-9 w-9 place-items-center rounded-full bg-accent text-paper transition-transform group-hover:translate-x-1">→</span>
+      </a>
+      <a href="#projects" class="label inline-flex items-center rounded-full border border-ink px-6 py-3 hover:bg-ink hover:text-paper">
+        See my work
+      </a>
+    </div>
+  </div>
+
+  <div class="mx-auto w-full max-w-md lg:max-w-none">
+    <img
+      src={site.portrait}
+      alt={`Portrait of ${site.name}`}
+      class="aspect-[3/4] w-full rounded-t-[999px] rounded-b-3xl object-cover"
+      width="600"
+      height="800"
+    />
+  </div>
+</section>
+
+<script define:vars={{ roles: site.roles }}>
+  const el = document.getElementById('role');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (el && roles.length > 1 && !reduce) {
+    let i = 0;
+    setInterval(() => {
+      el.style.opacity = '0';
+      setTimeout(() => {
+        i = (i + 1) % roles.length;
+        el.textContent = roles[i];
+        el.style.opacity = '1';
+      }, 300);
+    }, 2600);
+  }
+</script>

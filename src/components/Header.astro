@@ -1,0 +1,44 @@
+---
+import { site, nav } from '../data/site';
+---
+
+<header class="fixed inset-x-0 top-0 z-40 bg-paper/80 backdrop-blur-md">
+  <div class="container-x flex h-16 items-center justify-between">
+    <a href="/" class="display text-xl tracking-wide">{site.shortName}</a>
+
+    <nav class="hidden items-center gap-7 md:flex" aria-label="Primary">
+      {nav.map((n) => (
+        <a href={n.href} class="label text-muted transition-colors hover:text-ink">{n.label}</a>
+      ))}
+    </nav>
+
+    <button
+      id="menu-btn"
+      class="label rounded-full bg-ink px-4 py-2 text-paper md:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      Menu
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden border-t border-line bg-paper md:hidden">
+    <nav class="container-x flex flex-col py-4" aria-label="Mobile">
+      {nav.map((n) => (
+        <a href={n.href} class="display border-b border-line py-3 text-4xl last:border-0">{n.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('menu-btn')!;
+  const menu = document.getElementById('mobile-menu')!;
+  const toggle = (open: boolean) => {
+    menu.classList.toggle('hidden', !open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Close' : 'Menu';
+  };
+  btn.addEventListener('click', () => toggle(menu.classList.contains('hidden')));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => toggle(false)));
+</script>

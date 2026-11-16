@@ -1,0 +1,15 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line">
+  <div class="container-x flex flex-col gap-3 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+    <p class="font-sans">© {year} {site.name}. Built with Astro.</p>
+    <div class="flex gap-5">
+      {site.socials.map((s) => (
+        <a href={s.href} target="_blank" rel="noopener" class="label hover:text-ink">{s.label}</a>
+      ))}
+    </div>
+  </div>
+</footer>

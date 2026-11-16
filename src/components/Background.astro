@@ -1,0 +1,40 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { education, certifications, achievements } from '../data/site';
+---
+
+<section id="background" class="container-x border-t border-line py-20 sm:py-28">
+  <SectionHeading index="03" eyebrow="Background" title="Education" />
+
+  <div class="mt-14 grid gap-10 lg:grid-cols-3">
+    <div data-reveal>
+      <h3 class="label mb-5 text-muted">Degree</h3>
+      {education.map((e) => (
+        <div>
+          <p class="display text-3xl">{e.degree}</p>
+          <p class="mt-2 text-muted">{e.school} · {e.period}</p>
+          {e.note && <p class="mt-1 font-sans text-sm">{e.note}</p>}
+        </div>
+      ))}
+    </div>
+
+    <div data-reveal>
+      <h3 class="label mb-5 text-muted">Certifications</h3>
+      <ul class="space-y-3">
+        {certifications.map((c) => <li class="border-b border-line pb-3">{c}</li>)}
+      </ul>
+    </div>
+
+    <div data-reveal>
+      <h3 class="label mb-5 text-muted">Achievements</h3>
+      <ul class="space-y-5">
+        {achievements.map((a) => (
+          <li>
+            <p class="display text-2xl">{a.title}</p>
+            <p class="mt-1 text-muted">{a.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

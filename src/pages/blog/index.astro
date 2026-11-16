@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../data/site';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+
+<Base title={`Journal – ${site.name}`} description={`Notes and articles by ${site.name}.`}>
+  <section class="container-x pt-32 pb-24">
+    <p class="eyebrow mb-3 text-lg">Journal</p>
+    <h1 class="display text-7xl sm:text-8xl">All posts</h1>
+    <ul class="mt-14">
+      {posts.map((p) => (
+        <li>
+          <a href={`/blog/${p.id}`} class="group block border-t border-line py-8">
+            <time class="label text-muted" datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
+            <h2 class="display mt-2 text-4xl transition-colors group-hover:text-accent">{p.data.title}</h2>
+            <p class="mt-2 max-w-2xl text-muted">{p.data.description}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

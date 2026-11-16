@@ -1,0 +1,56 @@
+---
+import { site } from '../data/site';
+const field =
+  'mt-2 w-full rounded-xl border border-line bg-paper px-4 py-3 font-sans text-base outline-none transition-colors focus:border-accent';
+---
+
+<section id="contact" class="container-x grid gap-12 border-t border-line py-20 sm:py-28 lg:grid-cols-2">
+  <div data-reveal>
+    <p class="eyebrow mb-3 text-lg">(06) Say hello</p>
+    <h2 class="display text-[clamp(5rem,14vw,10rem)]">Let's<br />talk<span class="text-accent">.</span></h2>
+    <p class="mt-6 max-w-md text-xl">Have a role, a project or an idea? Send a message — I usually reply within a day.</p>
+    <a href={`mailto:${site.email}`} class="mt-8 inline-block text-2xl underline decoration-accent underline-offset-4">
+      {site.email}
+    </a>
+    <ul class="mt-8 flex flex-wrap gap-3">
+      {site.socials.map((s) => (
+        <li>
+          <a href={s.href} target="_blank" rel="noopener" class="label inline-block rounded-full border border-line px-4 py-2.5 hover:border-ink">
+            {s.label} ↗
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- Netlify Forms: submissions appear in your Netlify dashboard, no backend needed. -->
+  <form
+    name="contact"
+    method="POST"
+    action="/thanks"
+    data-netlify="true"
+    netlify-honeypot="company"
+    class="flex flex-col gap-5 rounded-3xl bg-paper-2 p-6 sm:p-10"
+    data-reveal
+  >
+    <input type="hidden" name="form-name" value="contact" />
+    <p class="hidden"><label>Leave this empty <input name="company" /></label></p>
+
+    <p class="display text-4xl">Send a message</p>
+    <label class="label text-muted">
+      Name
+      <input class={field} type="text" name="name" autocomplete="name" required />
+    </label>
+    <label class="label text-muted">
+      Email
+      <input class={field} type="email" name="email" autocomplete="email" required />
+    </label>
+    <label class="label text-muted">
+      Message
+      <textarea class={`${field} min-h-36 resize-y`} name="message" required></textarea>
+    </label>
+    <button type="submit" class="label mt-2 self-start rounded-full bg-ink px-7 py-4 text-paper transition-colors hover:bg-accent">
+      Send message →
+    </button>
+  </form>
+</section>

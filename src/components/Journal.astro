@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+
+<section id="journal" class="container-x border-t border-line py-20 sm:py-28">
+  <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+    <div>
+      <p class="eyebrow mb-3 text-lg">(05) Journal</p>
+      <h2 class="display text-6xl sm:text-7xl lg:text-8xl">Thoughts & Notes</h2>
+    </div>
+    <a href="/blog" class="label rounded-full border border-ink px-5 py-3 hover:bg-ink hover:text-paper">All posts →</a>
+  </div>
+
+  <ul class="mt-12">
+    {posts.map((p) => (
+      <li data-reveal>
+        <a
+          href={`/blog/${p.id}`}
+          class="group flex flex-col gap-2 border-t border-line py-7 sm:flex-row sm:items-baseline sm:justify-between"
+        >
+          <h3 class="display text-3xl transition-colors group-hover:text-accent sm:text-4xl">{p.data.title}</h3>
+          <time class="label shrink-0 text-muted" datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
